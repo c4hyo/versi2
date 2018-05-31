@@ -21,72 +21,76 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function login(Request $request)
+    {
+        $username   =   $request['user'];
+        $password   =   $request['password'];
+        $admin = Admin::where('user',$username)->get();
+        if(count($admin)>0){
+            foreach($admin as $admin){
+                if(Hash::check($password,$admin->password)){
+                    session([
+                        'user'  => $username,
+                        'nama'  => $admin->nama,
+                    ]);
+                    return redirect('bukanwp-admin/home');
+                }else{
+                    return redirect('/bukanwp-admin')->with('gagal','Kata Sandi Salah');
+                }
+            }
+        }else{
+            return redirect('/bukanwp-admin')->with('gagal','Nama Pengguna tidak terdaftar');
+        }
+    }
+    public function logout()
+    {
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $hancur = session()->flush();
+        // dd($hancur);
+        return redirect('/bukanwp-admin')->with('sukses','Anda berhasil keluar');
+    }
     public function index()
     {
-        return view('admin/home');
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        return view('admin/home',$session);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Admin $admin)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Admin $admin)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Admin $admin)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Admin $admin)
     {
         //

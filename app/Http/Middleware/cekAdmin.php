@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class cekUser
+class cekAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,10 @@ class cekUser
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->exists('nama')&&$request->session()->exists('nim')){
+        if($request->session()->exists('user')&&$request->session()->exists('nama')){
            return $next($request);
         }else{
-            return redirect ('login')->with('gagal','Anda belum login');;
+            return redirect ('/bukanwp-admin')->with('gagal','Anda belum login');;
         }
-
     }
 }

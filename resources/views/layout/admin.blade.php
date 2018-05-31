@@ -18,6 +18,7 @@
   <style>
    body{
    font-family: 'Roboto Condensed', sans-serif;
+   }
   </style>
 </head>
 <body class="hold-transition skin-red sidebar-mini">
@@ -38,7 +39,7 @@
       </a>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          
+
         </ul>
       </div>
     </nav>
@@ -95,7 +96,7 @@
             <span>Keluar</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{url('/login')}}"><i class="fa fa-check"></i>Ya</a></li>
+            <li><a href="{{url('/bukanwp-admin/logout')}}"><i class="fa fa-check"></i>Ya</a></li>
             <li><a href=""><i class="fa fa-remove"></i>Tidak</a></li>
           </ul>
         </li>
@@ -118,7 +119,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+
 
 <script src="{{url('bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{url('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>

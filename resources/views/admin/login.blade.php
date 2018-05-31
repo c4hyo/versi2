@@ -19,7 +19,7 @@
         background-size: 400% 400%;
         animation: BackgroundGradient 20s ease infinite;
     }
-    
+
     @keyframes BackgroundGradient {
         0% {background-position: 50% 0%;}
         50% {background-position: 50% 100%;}
@@ -29,7 +29,7 @@
 </head>
 <body class="hold-transition bg login-page">
 <div class="login-box">
-  
+
   <!-- /.login-logo -->
   <div class="login-box-body">
   	<div class="login-logo">
@@ -41,7 +41,7 @@
     <form action="#" method="post">
       {{csrf_field()}}
       <div class="form-group has-feedback">
-        <input type="text" name="nim" class="form-control" placeholder="NIM" title="NIM menggunakan angka dan panjangnya 14 karakter">
+        <input type="text" name="user" class="form-control" placeholder="Nama Pengguna" title="NIM menggunakan angka dan panjangnya 14 karakter">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -62,7 +62,24 @@
       </div>
     </form>
     <div style="padding-top:10px; ">
-
+    @if(session('sukses'))
+      <div class="alert alert-success">
+          <p align="center">{{ session('sukses') }}</p>
+      </div>
+    @elseif(session('gagal'))
+      <div class="alert alert-danger">
+          <p align="center">{{ session('gagal') }}</p>
+      </div>
+    @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     </div>
     </div>
 </div>

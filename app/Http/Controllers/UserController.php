@@ -25,7 +25,7 @@ class UserController extends Controller
                 ]);
     			return redirect('/user');
     		}else{
-    			return redirect('/login')->with('gagal','Salah Password');
+    			return redirect('/login')->with('gagal','Kata Sandi Salah');
     		}
     	}
     }else{
@@ -44,7 +44,7 @@ class UserController extends Controller
     }
 
     public function index()
-    {   
+    {
         $session = array(
             'nama'  =>  session('nama'),
             'nim'   =>  session('nim')
@@ -57,7 +57,7 @@ class UserController extends Controller
             'nama'  =>  session('nama'),
             'nim'   =>  session('nim')
         );
-        
+
            return view('user/alat',$session);
     }
     public function meja()
@@ -83,6 +83,6 @@ class UserController extends Controller
             'nim'   =>  session('nim')
         );
            return view('user/pengaturan',$session);
-        
+
     }
 }
