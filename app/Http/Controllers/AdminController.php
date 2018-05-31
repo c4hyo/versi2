@@ -59,12 +59,51 @@ class AdminController extends Controller
     }
     public function index()
     {
-
         $session = array(
             'nama'  => session('nama'),
             'user'  => session('user'),
         );
         return view('admin/home',$session);
+    }
+    public function peminjaman()
+    {
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        return view('admin/peminjaman',$session);
+    }
+    public function pengaturan()
+    {
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        return view('admin/pengaturan',$session);
+    }
+    public function pengelolaan()
+    {
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        return view('admin/kelola',$session);
+    }
+     public function posting()
+    {
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        return view('admin/posting',$session);
+    }
+     public function praktikum()
+    {
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        return view('admin/praktikum',$session);
     }
     public function create()
     {

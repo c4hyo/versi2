@@ -21,12 +21,12 @@
    }
   </style>
 </head>
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-red sidebar-mini" onload="startTime()">
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="" class="logo">
+    <a href="{{url('/bukanwp-admin/home')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>Lab</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -51,7 +51,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{url('img/sop.png')}}" class="img-circle" alt="User Image">
+          <img src="{{url('img/undip.png')}}" class="img-circle img-thumbnail" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>@yield('nama')</p>
@@ -61,31 +61,31 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Navigasi Utama</li>
         <li>
-          <a href="">
+          <a href="{{url('/bukanwp-admin/peminjaman')}}">
             <i class="fa fa-handshake-o"></i>
             <span>Peminjaman</span>
           </a>
         </li>
         <li>
-          <a href="">
+          <a href="{{url('/bukanwp-admin/pengelolaan')}}">
             <i class="fa fa-pencil-square-o"></i>
             <span>Pengelolaan</span>
           </a>
         </li>
         <li>
-          <a href="">
+          <a href="{{url('/bukanwp-admin/posting')}}">
             <i class="fa fa-pencil"></i>
             <span>Posting</span>
           </a>
         </li>
         <li>
-          <a href="">
+          <a href="{{url('/bukanwp-admin/praktikum')}}">
             <i class="fa fa-mortar-board"></i>
             <span>Praktikum</span>
           </a>
         </li>
         <li>
-          <a href="">
+          <a href="{{url('/bukanwp-admin/pengaturan')}}">
             <i class="fa fa-wrench"></i>
             <span>Pengaturan</span>
           </a>

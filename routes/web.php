@@ -27,6 +27,11 @@ Route::group(['middleware'=>'cekUser'],function(){
 Route::get('/admin', function() {return view('admin/404');});
 Route::group(['middleware'=>'cekAdmin'],function(){
     Route::get('/bukanwp-admin/home','AdminController@index');
+    Route::get('/bukanwp-admin/peminjaman','AdminController@peminjaman');
+    Route::get('/bukanwp-admin/pengelolaan','AdminController@pengelolaan');
+    Route::get('/bukanwp-admin/posting','AdminController@posting');
+    Route::get('/bukanwp-admin/praktikum','AdminController@praktikum');
+    Route::get('/bukanwp-admin/pengaturan','AdminController@pengaturan');
 });
 
 //  Route::get('/bukanwp-admin/home','AdminController@index');
