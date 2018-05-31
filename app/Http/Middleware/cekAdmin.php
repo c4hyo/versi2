@@ -15,10 +15,11 @@ class cekAdmin
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->exists('user')&&$request->session()->exists('nama')){
+        if($request->session()->exists('nama')||$request->session()->exists('user')){
            return $next($request);
         }else{
-            return redirect ('/bukanwp-admin')->with('gagal','Anda belum login');;
+            // return redirect ('bukanwp-admin')->with('gagal','Anda belum login');
+             return back()->with('gagal','Anda belum login');
         }
     }
 }

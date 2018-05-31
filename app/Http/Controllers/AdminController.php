@@ -24,6 +24,10 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'user'      => 'required',
+            'password'  =>  'required|min:8'
+        ]);
         $username   =   $request['user'];
         $password   =   $request['password'];
         $admin = Admin::where('user',$username)->get();
@@ -55,6 +59,7 @@ class AdminController extends Controller
     }
     public function index()
     {
+
         $session = array(
             'nama'  => session('nama'),
             'user'  => session('user'),
