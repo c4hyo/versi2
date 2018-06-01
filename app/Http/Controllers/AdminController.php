@@ -60,8 +60,11 @@ class AdminController extends Controller
     public function index()
     {
         $session = array(
-            'nama'  => session('nama'),
-            'user'  => session('user'),
+            'nama'      => session('nama'),
+            'user'      => session('user'),
+            'meja'      => count(Meja::all()),
+            'alat'      => count(Alat::all()),
+            'posting'   => count(Posting::all()),
         );
         return view('admin/home',$session);
     }

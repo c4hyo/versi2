@@ -47,7 +47,7 @@ switch (date("l")) {
         <div class="col-lg-3 col-xs-6">
           <div style="background:#00695c ;color:#e0e0e0;" class="small-box">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{$meja}}</h3>
               <p>Meja Tersedia</p>
             </div>
             <div class="icon">
@@ -59,7 +59,7 @@ switch (date("l")) {
         <div class="col-lg-3 col-xs-6">
           <div style="background:#9e9d24;color:#e0e0e0;" class="small-box">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{$alat}}</h3>
               <p>Alat Tersedia</p>
             </div>
             <div class="icon">
@@ -71,7 +71,7 @@ switch (date("l")) {
         <div class="col-lg-3 col-xs-6">
           <div style="background:#ef6c00 ;color:#e0e0e0;" class="small-box">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{$posting}}</h3>
               <p>Banyak Posting</p>
             </div>
             <div class="icon">
