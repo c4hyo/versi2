@@ -35,4 +35,22 @@
         </div>
     </div>
 </div>
+ <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#meja" data-toggle="tab"><span class="fa fa-table">&nbsp;</span>Peminjam Meja</a></li>
+        <li><a href="#alat" data-toggle="tab"><span class="fa fa-wrench">&nbsp;</span>Peminjam Alat</a></li>
+        <li><a href="#ruang" data-toggle="tab"><span class="fa fa-home">&nbsp;</span>Peminjam Ruangan</a></li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="active tab-pane" id="meja">
+        <p>MEJA</p>
+    </div>
+    <div class="tab-pane" id="alat">
+        <p>Alat</p>
+    </div>
+    <div class="tab-pane" id="ruang">
+        <p>Ruang</p>
+    </div>
+</div>
 @endsection
