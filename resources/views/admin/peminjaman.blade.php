@@ -35,6 +35,7 @@
         </div>
     </div>
 </div>
+<center><h1>Daftar Peminjam</h1></center>
  <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#meja" data-toggle="tab"><span class="fa fa-table">&nbsp;</span>Peminjam Meja</a></li>
@@ -44,7 +45,40 @@
 </div>
 <div class="tab-content">
     <div class="active tab-pane" id="meja">
-        <p>MEJA</p>
+        <h2 align="center">Meja</h2>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="table-responsive thumbnail">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>No Meja</th>
+                            <th>Nama</th>
+                            <th>Nim</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                        @foreach($meja as $meja)
+                            <tr>
+                                <td>{{$meja->id}}</td>
+                                @if($meja->username == null)
+                                <td>{{"---"}}</td>
+                                <td>{{"---"}}</td>
+                                <td>{{$meja->status}}</td>
+                                <td></td>
+                                @else
+                                <td>{{$meja->nama}}</td>
+                                <td>{{$meja->username}}</td>
+                                <td></td>
+                                <td>
+                                    <div><a href=""></a></div>
+                                </td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="tab-pane" id="alat">
         <p>Alat</p>
@@ -53,4 +87,10 @@
         <p>Ruang</p>
     </div>
 </div>
+@endsection
+@section('css')
+<link rel="stylesheet" href="{{url('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+@endsection
+@section('js')
+
 @endsection

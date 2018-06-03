@@ -70,9 +70,11 @@ class AdminController extends Controller
     }
     public function peminjaman()
     {
+        $meja       = Meja::get();
         $session = array(
             'nama'  => session('nama'),
             'user'  => session('user'),
+            'meja'  => $meja,
         );
         return view('admin/peminjaman',$session);
     }
