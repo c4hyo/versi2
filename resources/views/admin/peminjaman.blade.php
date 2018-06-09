@@ -36,61 +36,37 @@
     </div>
 </div>
 <center><h1>Daftar Peminjam</h1></center>
- <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#meja" data-toggle="tab"><span class="fa fa-table">&nbsp;</span>Peminjam Meja</a></li>
-        <li><a href="#alat" data-toggle="tab"><span class="fa fa-wrench">&nbsp;</span>Peminjam Alat</a></li>
-        <li><a href="#ruang" data-toggle="tab"><span class="fa fa-home">&nbsp;</span>Peminjam Ruangan</a></li>
-    </ul>
-</div>
-<div class="tab-content">
-    <div class="active tab-pane" id="meja">
-        <h2 align="center">Meja</h2>
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-                <div class="table-responsive thumbnail">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>No Meja</th>
-                            <th>Nama</th>
-                            <th>Nim</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                        @foreach($meja as $meja)
-                            <tr>
-                                <td>{{$meja->id}}</td>
-                                @if($meja->username == null)
-                                <td>{{"---"}}</td>
-                                <td>{{"---"}}</td>
-                                <td>{{$meja->status}}</td>
-                                <td></td>
-                                @else
-                                <td>{{$meja->nama}}</td>
-                                <td>{{$meja->username}}</td>
-                                <td></td>
-                                <td>
-                                    <div><a href=""></a></div>
-                                </td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#meja" data-toggle="tab"><span class="fa fa-table">&nbsp;</span>Peminjam Meja</a></li>
+                <li><a href="#alat" data-toggle="tab"><span class="fa fa-wrench">&nbsp;</span>Peminjam Alat</a></li>
+                <li><a href="#ruang" data-toggle="tab"><span class="fa fa-home">&nbsp;</span>Peminjam Ruangan</a></li>
+            </ul>
         </div>
     </div>
-    <div class="tab-pane" id="alat">
-        <p>Alat</p>
-    </div>
-    <div class="tab-pane" id="ruang">
-        <p>Ruang</p>
-    </div>
+</div>
+<div class="tab-content">
+    @include('admin.peminjam.meja')
+    @include('admin.peminjam.alat')
+    @include('admin.peminjam.ruang')
 </div>
 @endsection
 @section('css')
 <link rel="stylesheet" href="{{url('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 @endsection
 @section('js')
+<script>
+    $(function () {
+        $('#pinjamAlat').DataTable({
+            processing 	: 	true,
 
+        })
+        $('#pinjamRuang').DataTable({
+            processing 	: 	true,
+
+        })
+    });
+</script>
 @endsection
