@@ -18,8 +18,8 @@
             <span class="info-box-icon bg-blue"><i class="fa fa-wrench"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Peminjam Alat</span>
-              <h4><span class="label label-primary">0</span></h4>
-              <span class="info-box-text">Orang</span>
+              <h4><span class="label label-primary">{{$cntAlat}}</span></h4>
+              <span class="info-box-text">Peminjam</span>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
             <span class="info-box-icon bg-orange"><i class="fa fa-home"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Peminjam Ruang</span>
-              <h4><span class="label label-warning">0</span></h4>
+              <h4><span class="label label-warning">{{$cntRuang}}</span></h4>
               <span class="info-box-text">Orang</span>
             </div>
           </div>
@@ -36,8 +36,16 @@
     </div>
 </div>
 <center><h1>Daftar Peminjam</h1></center>
+  @if(session('sukses'))
+      <div class="alert alert-success">
+          <p align="center">{{ session('sukses') }}</p>
+      </div>
+    @elseif(session('gagal'))
+      <div class="alert alert-danger">
+          <p align="center">{{ session('gagal') }}</p>
+      </div>
+    @endif
 <div class="row">
-    <div class="col-sm-offset-3 col-sm-6">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#meja" data-toggle="tab"><span class="fa fa-table">&nbsp;</span>Peminjam Meja</a></li>
@@ -45,7 +53,6 @@
                 <li><a href="#ruang" data-toggle="tab"><span class="fa fa-home">&nbsp;</span>Peminjam Ruangan</a></li>
             </ul>
         </div>
-    </div>
 </div>
 <div class="tab-content">
     @include('admin.peminjam.meja')

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Yajra\DataTables\Datatables;
 use App\Admin;
 use App\Alat;
 use App\Meja;
@@ -11,6 +13,8 @@ use App\Posting;
 use App\Praktikum;
 use App\Ruang;
 use App\User;
+use App\viewalat;
+use App\viewruang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -59,22 +63,35 @@ class AdminController extends Controller
     }
     public function index()
     {
+        $online     = Peminjam::where('status','Online')->get();
         $session = array(
             'nama'      => session('nama'),
             'user'      => session('user'),
             'meja'      => count(Meja::all()),
-            'alat'      => count(Alat::all()),
+            'alat'      => count(Alat::where('stok','<>','0')->get()),
             'posting'   => count(Posting::all()),
+            'online'    => $online
         );
         return view('admin/home',$session);
     }
     public function peminjaman()
     {
-        $meja       = Meja::get();
+        $viewAlat   =   viewalat::groupBy(['username','tgl_pinjam','tgl_kembali','status'])
+                        ->where('status','<>','Batal')->get();
+        $viewRuang  =   viewruang::where('status','<>','Batal')->get();
+        $meja       =   Meja::get();
+        $cntRuang   =   count(viewruang::groupBy(['username'])->where('status','<>','Batal')->get());
+        $cntAlat    =   count(viewalat::groupBy(['username','status'])->where('status','<>','Batal')->get());
+        $alat       =   viewalat::where('status','<>','Batal')->get();
         $session = array(
-            'nama'  => session('nama'),
-            'user'  => session('user'),
-            'meja'  => $meja,
+            'nama'      =>  session('nama'),
+            'user'      =>  session('user'),
+            'meja'      =>  $meja,
+            'viewAlat'  =>  $viewAlat,
+            'cntAlat'   =>  $cntAlat,
+            'alat1'     =>  $alat,
+            'cntRuang'  =>  $cntRuang,
+            'Ruang'     =>  $viewRuang
         );
         return view('admin/peminjaman',$session);
     }
@@ -96,11 +113,30 @@ class AdminController extends Controller
     }
      public function posting()
     {
+        $posting    =   Posting::get();
+        $session = array(
+            'nama'      =>  session('nama'),
+            'user'      =>  session('user'),
+            'posting'   =>  $posting
+        );
+        return view('admin/posting',$session);
+    }
+    public function postAdd(Request $request)
+    {
+
         $session = array(
             'nama'  => session('nama'),
             'user'  => session('user'),
         );
-        return view('admin/posting',$session);
+        $judul  =   $request['judul'];
+        $slug   =   strtolower(str_replace(" ", "-", $judul));
+        // dd($judul);
+        Posting::create([
+            'judul'     =>  $judul,
+            'slug'      =>  $slug,
+            'posting'   =>  $request['posting']
+        ]);
+        return redirect()->back()->with('sukses','Posting berhasil ditambahkan');
     }
      public function praktikum()
     {
@@ -110,38 +146,82 @@ class AdminController extends Controller
         );
         return view('admin/praktikum',$session);
     }
-    public function create()
+    public function online()
     {
-        //
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $online = Peminjam::where('status','Online');
+        return Datatables::of($online)
+            ->make(true);
     }
-
-
-    public function store(Request $request)
+    public function alatSetuju($nim,$pinjam,$kembali)
     {
-        //
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $kondisi    =   array(
+            'id_peminjam'   =>  $nim,
+            'tgl_pinjam'    =>  $pinjam,
+            'tgl_kembali'   =>  $kembali,
+            'status'        =>  "Belum"
+        );
+        PinjamAlat::where($kondisi)->update([
+            'status'        =>  "Sudah"
+        ]);
+        return redirect()->back()->with('sukses','Sudah menyetujui peminjaman alat ');
     }
-
-
-    public function show(Admin $admin)
+    public function alatBatal($nim,$pinjam,$kembali)
     {
-        //
+       $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $kondisi    =   array(
+            'id_peminjam'   =>  $nim,
+            'tgl_pinjam'    =>  $pinjam,
+            'tgl_kembali'   =>  $kembali,
+            'status'        =>  "Belum"
+        );
+        PinjamAlat::where($kondisi)->update([
+            'status'        =>  "Batal"
+        ]);
+        return redirect()->back()->with('gagal','Peminjaman alat dibatalkan');
     }
-
-
-    public function edit(Admin $admin)
+    public function ruangSetuju($nim,$tgl,$guna)
     {
-        //
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $kondisi    =   array(
+            'id_peminjam'   =>  $nim,
+            'kegunaan'      =>  $guna,
+            'tgl_pinjam'    =>  $tgl,
+            'status'        =>  "Belum"
+        );
+        Ruang::where($kondisi)->update([
+            'status'        =>  "Sudah"
+        ]);
+        return redirect()->back()->with('sukses','Peminjaman ruang disetujui');
     }
-
-
-    public function update(Request $request, Admin $admin)
+    public function ruangBatal($nim,$tgl,$guna)
     {
-        //
-    }
-
-
-    public function destroy(Admin $admin)
-    {
-        //
+        $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $kondisi    =   array(
+            'id_peminjam'   =>  $nim,
+            'kegunaan'      =>  $guna,
+            'tgl_pinjam'    =>  $tgl,
+            'status'        =>  "Belum"
+        );
+        Ruang::where($kondisi)->update([
+            'status'        =>  "Batal"
+        ]);
+        return redirect()->back()->with('gagal','Peminjaman ruang dibatalkan');
     }
 }

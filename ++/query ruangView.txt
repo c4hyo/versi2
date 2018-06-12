@@ -1,0 +1,6 @@
+CREATE VIEW ruangView as
+SELECT peminjams.nama,peminjams.username,peminjams.no_hp,peminjams.alamat,ruangs.kegunaan,ruangs.tema,ruangs.tgl_pinjam,ruangs.keterangan,peminjams.foto,peminjams.ktm,ruangs.status
+FROM
+peminjams INNER JOIN ruangs
+ON
+peminjams.username = ruangs.id_peminjam

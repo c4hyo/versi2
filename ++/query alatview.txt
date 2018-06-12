@@ -1,0 +1,2 @@
+CREATE VIEW alatView AS
+SELECT alats.id,alats.nama as nama_alat,peminjams.nama,peminjams.username,peminjams.no_hp,peminjams.alamat,pinjam_alats.jumlah,pinjam_alats.tgl_pinjam,pinjam_alats.tgl_kembali,pinjam_alats.kegunaan,pinjam_alats.status from alats INNER JOIN (peminjams INNER JOIN pinjam_alats ON peminjams.username = pinjam_alats.id_peminjam) ON alats.id = pinjam_alats.id_alat

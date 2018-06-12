@@ -1,5 +1,4 @@
 <div class="active tab-pane" id="meja">
-        <h2 align="center">Meja</h2>
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="table-responsive thumbnail">
@@ -17,7 +16,7 @@
                                 @if($meja->username == null)
                                 <td>{{"---"}}</td>
                                 <td>{{"---"}}</td>
-                                <td>{{$meja->status}}</td>
+                                <td><label class="label label-warning">{{$meja->status}}</label></td>
                                 <td></td>
                                 @else
                                 <td>{{$meja->nama}}</td>

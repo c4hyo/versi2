@@ -19,6 +19,7 @@ class CreatePostingsTable extends Migration
             $table->string('slug');
             $table->text('posting')->nullable($value=true);
             $table->timestamp('waktu');
+            $table->string('status',15);
         });
     }
 

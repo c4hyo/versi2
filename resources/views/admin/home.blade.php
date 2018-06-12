@@ -86,19 +86,28 @@ switch (date("l")) {
         <div class="col-sm-8 col-md-8 col-xs-12">
             <div class="thumbnail" id="calendar"></div>
         </div>
-        <div class="thumbnail col-sm-4 col-md-4 col-xs-12" style="height:590px;overflow-y:scroll">
-        @php
-            for($i=0;$i<100;$i++){
-        @endphp
-        <li class="list-group-item list-group-item-success">First item</li>
-        @php
-            }
-        @endphp
+        <div class="thumbnail col-sm-4 col-md-4 col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="online">
+                    <thead>
+                        <tr>
+                            <th>Pengguna</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Pengguna</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 @section('css')
+<link rel="stylesheet" href="{{url('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
  <link rel="stylesheet" href="{{url('bower_components/fullcalendar/dist/fullcalendar.min.css')}}">
  <link rel="stylesheet" href="{{url('bower_components/fullcalendar/dist/fullcalendar.print.min.css')}}" media="print">
 @endsection
@@ -163,5 +172,25 @@ function checkTime(i) {
     if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
+</script>
+<script src="{{url('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{url('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script>
+  $(function () {
+    $('#online').DataTable({
+        paging      : false,
+        lengthChange: false,
+        searching   : false,
+        ordering    : true,
+        info        : true,
+        autoWidth   : false,
+    	processing 	: 	true,
+    	serverSide	: 	true,
+    	ajax		: 	"{{route('Online')}}",
+    	columns		: 	[
+    		{data:'nama',name:'nama'}
+    	]
+    })
+});
 </script>
 @endsection

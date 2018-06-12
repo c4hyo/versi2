@@ -4,10 +4,19 @@
 
 @endsection
 @section('konten')
+@if(session('sukses'))
+      <div class="alert alert-success">
+          <p align="center">{{ session('sukses') }}</p>
+      </div>
+    @elseif(session('gagal'))
+      <div class="alert alert-danger">
+          <p align="center">{{ session('gagal') }}</p>
+      </div>
+    @endif
 <div class="row">
     <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7">
         <h2>Buat Posting</h2>
-        <form class="form-group" action="/admin/posting" method="post">
+        <form class="form-group" action="{{url('/bukanwp-admin/posting')}}" method="post">
             <div>
                 <input type="text" name="judul" class="form-control" placeholder="Judul" required>
             </div>
@@ -28,6 +37,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($posting as $posting)
+                    <tr>
+                        <td>{{$posting->judul}}</td>
+                        <td>
+                            <a href="" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                            <a href="" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
