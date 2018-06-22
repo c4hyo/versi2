@@ -38,6 +38,8 @@
                     <td><p class="label label-danger">Peminjaman Melebihi Batas</p></td>
                     @elseif($alat->tgl_kembali == date("Y-m-d"))
                     <td><p class="label label-warning">Hari terakhir pengembalian</p></td>
+                    @else
+                    <td>---</td>
                     @endif
                     <td>
                         <div>

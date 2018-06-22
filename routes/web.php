@@ -2,7 +2,6 @@
 // use \App\Http\Middleware\cekAdmin;
 // use \App\Http\Middleware\cekUser;
 
-
 Route::get('/','GuestController@index');
 Route::get('/alat','GuestController@alat');
 Route::get('/kegiatan','GuestController@kegiatan');
@@ -18,7 +17,8 @@ Route::get('/logout','UserController@logout');
 Route::group(['middleware'=>['cekUser']],function()
 {
 	Route::get('/user', 'UserController@index');
-	Route::get('/user/home', 'UserController@index');
+    Route::get('/user/home', 'UserController@index');
+    Route::get('/user/home/kembali/{pinjam}/{kembal}','UserController@alatKembali');
     Route::get('/user/alat', 'UserController@alat');
     Route::get('/user/alat/cart','UserController@cart');
     Route::get('/user/alat/cart/batal','UserController@cartbatal');
@@ -37,6 +37,7 @@ Route::group(['middleware'=>['cekAdmin']],function(){
     Route::get('/bukanwp-admin/peminjaman','AdminController@peminjaman');
     Route::get('/bukanwp-admin/peminjaman/alat/setuju/{nim}/{pinjam}/{kembali}','AdminController@alatSetuju');
     Route::get('/bukanwp-admin/peminjaman/alat/batal/{nim}/{pinjam}/{kembali}','AdminController@alatBatal');
+    Route::get('/bukanwp-admin/peminjaman/alat/terima/{nim}/{pinjam}/{kembali}','AdminController@alatTerima');
     Route::get('/bukanwp-admin/peminjaman/ruang/setuju/{nim}/{tgl}/{guna}','AdminController@ruangSetuju');
     Route::get('/bukanwp-admin/peminjaman/ruang/batal/{nim}/{tgl}/{guna}','AdminController@ruangBatal');
     Route::get('/bukanwp-admin/peminjaman/meja/setuju/{id}','AdminController@mejaSetuju');

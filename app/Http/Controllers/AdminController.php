@@ -300,6 +300,23 @@ class AdminController extends Controller
         ]);
         return redirect()->back()->with('gagal','Peminjaman alat dibatalkan');
     }
+    public function alatTerima($nim,$pinjam,$kembali)
+    {
+       $session = array(
+            'nama'  => session('nama'),
+            'user'  => session('user'),
+        );
+        $kondisi    =   array(
+            'id_peminjam'   =>  $nim,
+            'tgl_pinjam'    =>  $pinjam,
+            'tgl_kembali'   =>  $kembali,
+            'status'        =>  "P Kembali"
+        );
+        PinjamAlat::where($kondisi)->update([
+            'status'        =>  "Terima"
+        ]);
+        return redirect()->back()->with('sukses','Alat sudah dikembalikan');
+    }
     public function ruangSetuju($nim,$tgl,$guna)
     {
         $session = array(

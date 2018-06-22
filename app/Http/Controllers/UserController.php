@@ -9,6 +9,9 @@ use App\Meja;
 use App\Alat;
 use App\Ruang;
 use App\PinjamAlat;
+use App\User;
+use App\viewalat;
+use App\viewruang;
 
 class UserController extends Controller
 {
@@ -56,11 +59,33 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        $lihatAlat      =   viewalat::groupBy(['username','tgl_pinjam','tgl_kembali'])->where('status','<>','Batal')->where('username',session('nim'))->get();
+        $lihatRuang     =   viewruang::groupBy(['username','tgl_pinjam'])->where('username',session('nim'))->get();
+        $alats          =   viewalat::where('status','<>','Batal')->where('username',session('nim'))->get();
         $session = array(
             'nama'  =>  session('nama'),
-            'nim'   =>  session('nim')
+            'nim'   =>  session('nim'),
+            'meja'      => count(Meja::where('status','belum')->get()),
+            'alat'      => count(Alat::where('stok','<>','0')->get()),
+            'alat1'     => count($lihatAlat->where('status','Belum')),
+            'ruang'     => count($lihatRuang->where('status','Belum')),
+            'alat2'     =>  $lihatAlat,
+            'ruang2'    =>  $lihatRuang,
+            'alat3'     =>  $alats
         );
     	   return view('user/home',$session);
+    }
+    public function alatKembali($pinjam,$kembali)
+    {
+        $kondisi    =   [
+            'tgl_pinjam'    =>  $pinjam,
+            'tgl_kembali'   =>  $kembali,
+            'id_peminjam'   =>  session('nim')
+        ];
+        PinjamAlat::where($kondisi)->update([
+            'status' => "P Kembali"
+        ]);
+        return redirect()->back()->with("sukses","Alat sedang dalam proses pengembalian");
     }
     public function alat()
     {
