@@ -6,6 +6,7 @@
                     <th>Nama Peminjam</th>
                     <th>Nim Peminjam</th>
                     <th>Status</th>
+                    <th>Keterangan</th>
                     <th>Aksi</th>
 				</tr>
 			</thead>
@@ -16,6 +17,7 @@
                     <td>{{$alat->nama}}</td>
                     <td>{{$alat->username}}</td>
                     <td><label class="label label-danger">{{$alat->status}}</label></td>
+                    <td>---</td>
                     <td>
                         <div>
                             <a href="#show{{$alat->username}}{{$alat->tgl_pinjam}}{{$alat->tgl_kembali}}" class="btn btn-default" data-toggle="modal"><span class="fa fa-search"></span></a>
@@ -32,6 +34,11 @@
                     <td>{{$alat->nama}}</td>
                     <td>{{$alat->username}}</td>
                     <td><label class="label label-primary">{{$alat->status}}</label></td>
+                    @if($alat->tgl_kembali < date("Y-m-d"))
+                    <td><p class="label label-danger">Peminjaman Melebihi Batas</p></td>
+                    @elseif($alat->tgl_kembali == date("Y-m-d"))
+                    <td><p class="label label-warning">Hari terakhir pengembalian</p></td>
+                    @endif
                     <td>
                         <div>
                             <a href="#show{{$alat->username}}{{$alat->tgl_pinjam}}{{$alat->tgl_kembali}}" class="btn btn-default" data-toggle="modal"><span class="fa fa-search"></span></a>
@@ -44,6 +51,7 @@
                     <td>{{$alat->nama}}</td>
                     <td>{{$alat->username}}</td>
                     <td><label class="label label-warning">Proses Kembali</label></td>
+                    <td>---</td>
                     <td>
                         <div>
                             <a href="#show{{$alat->username}}{{$alat->tgl_pinjam}}{{$alat->tgl_kembali}}" class="btn btn-default" data-toggle="modal"><span class="fa fa-search"></span></a>
@@ -58,6 +66,7 @@
                     <td>{{$alat->nama}}</td>
                     <td>{{$alat->username}}</td>
                     <td><label class="label label-success">Alat sudah diterima</label></td>
+                    <td>---</td>
                     <td>
                         <div>
                             <a href="#show{{$alat->username}}{{$alat->tgl_pinjam}}{{$alat->tgl_kembali}}" class="btn btn-success" data-toggle="modal"><span class="fa fa-search"></span></a>
@@ -73,6 +82,7 @@
                     <th>Nama Peminjam</th>
                     <th>Nim Peminjam</th>
                     <th>Status</th>
+                    <th>Keterangan</th>
                     <th>Aksi</th>
 				</tr>
 			</tfoot>

@@ -18,9 +18,10 @@
   <style>
    body{
    font-family: 'Roboto Condensed', sans-serif;
+   }
   </style>
 </head>
-<body class="hold-transition skin-blue-light sidebar-mini">
+<body class="hold-transition skin-blue-light sidebar-collapse sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
@@ -38,7 +39,7 @@
       </a>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          
+
         </ul>
       </div>
     </nav>
@@ -112,7 +113,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+
 
 <script src="{{url('bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{url('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>

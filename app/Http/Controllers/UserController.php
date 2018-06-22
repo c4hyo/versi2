@@ -54,7 +54,7 @@ class UserController extends Controller
         return redirect('/login')->with('sukses','Anda berhasil keluar');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $session = array(
             'nama'  =>  session('nama'),
@@ -258,5 +258,21 @@ class UserController extends Controller
             return redirect()->back()->with('gagal','Anda telah meminjam ruang untuk'.$request['kegunaan']);
         }
     }
+    public function mejaPinjam($id)
+    {
+        $nim        =   session('nim');
+        $nama       =   session('nama');
+        $cek        =   Meja::where('username',$nim)->get();
+        if(count($cek)==0){
+            Meja::where('id',$id)->update([
+            'username'  =>  $nim,
+            'nama'      =>  $nama,
+            'status'    =>  "Proses"
+        ]);
+            return redirect()->back()->with('sukses','Peminjaman meja sedang diproses');
+        }else{
+            return redirect()->back()->with('gagal','Anda sedang meminjam meja');
+        }
 
+    }
 }

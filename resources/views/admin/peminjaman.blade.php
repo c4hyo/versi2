@@ -8,7 +8,7 @@
             <span class="info-box-icon bg-green"><i class="fa fa-table"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Peminjam Meja</span>
-              <h4><span class="label label-success">0</span></h4>
+              <h4><span class="label label-success">{{$cntMeja}}</span></h4>
               <span class="info-box-text">Orang</span>
             </div>
           </div>

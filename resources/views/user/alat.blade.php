@@ -44,7 +44,11 @@
                 @foreach($alat as $alat)
                 <tr>
                     <td>{{$no++}}</td>
-                    <td><img src="" alt="" srcset=""></td>
+                    @if($alat->gambar == null)
+                    <td><img src="{{url('img/alat/not.png')}}" class="img-responsive img-thumbnail img-rounded" style="width:70%"></td>
+                    @else
+                    <td><img src="{{$alat->gambar}}" class="img-responsive img-thumbnail img-rounded" style="width:70%"></td>
+                    @endif
                     <td>
                         <div>
                             <label for="">Nama Alat : </label>

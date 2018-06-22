@@ -3,6 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{csrf_token()}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{url('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
@@ -21,7 +22,7 @@
    }
   </style>
 </head>
-<body class="hold-transition skin-red sidebar-mini" onload="startTime()">
+<body class="hold-transition skin-red sidebar-collapse sidebar-mini" onload="startTime()">
 <div class="wrapper">
 
   <header class="main-header">
@@ -126,7 +127,7 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
-@yield('js')
+
 <script src="{{url('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{url('bower_components/moment/min/moment.min.js')}}"></script>
 <script src="{{url('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
@@ -136,5 +137,6 @@
 <script src="{{url('dist/js/adminlte.min.js')}}"></script>
 <script src="{{url('dist/js/pages/dashboard.js')}}"></script>
 <script src="{{url('dist/js/demo.js')}}"></script>
+@yield('js')
 </body>
 </html>
