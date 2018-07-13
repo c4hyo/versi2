@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-sm-7">
                                 <div><h4>Meja&nbsp;{{$meja->id}}</h4></div>
-                                <div><label>Belum&nbsp;di pinjam</label></div>
+                                <div><label>Sudah&nbsp;di pinjam</label></div>
                             </div>
                         </div>
                     </div>

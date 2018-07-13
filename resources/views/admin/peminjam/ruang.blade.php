@@ -19,10 +19,16 @@
                         <td>
                             <a href="#show{{$ruang->username}}{{$ruang->tgl_pinjam}}" data-toggle="modal" class="btn btn-default" ><span class="fa fa-search"></span></a>
                             @include('admin.peminjam.ruang.show')
-                            <a href="#setuju{{$ruang->username}}{{$ruang->tgl_pinjam}}" data-toggle="modal" class="btn btn-success"><span class="fa fa-check"></span></a>
-                            @include('admin.peminjam.ruang.setuju')
                             <a href="#batal{{$ruang->username}}{{$ruang->tgl_pinjam}}" data-toggle="modal" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                             @include('admin.peminjam.ruang.batal')
+                            @if($ruang->ktm == null)
+
+                            @else
+                            <a href="#setuju{{$ruang->username}}{{$ruang->tgl_pinjam}}" data-toggle="modal" class="btn btn-success"><span class="fa fa-check"></span></a>
+                            @include('admin.peminjam.ruang.setuju')
+                            <a href="{{$ruang->ktm}}" class="btn btn-info"><span class="fa fa-user"></span></a>
+                            @endif
+
                         </td>
                     </tr>
                 @elseif($ruang->status == "Sudah")

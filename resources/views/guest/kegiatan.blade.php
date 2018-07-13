@@ -32,15 +32,23 @@
       locale: initialLocaleCode,
       buttonIcons: false, // show the prev/next text
       weekNumbers: true,
-      navLinks: true, // can click day/week names to navigate views
-      editable: false,
-      eventLimit: true, // allow "more" link when too many events
+      navLinks: true,
       events: [
+        @foreach($praktikum as $prak)
         {
-          title: 'All Day Event',
-          start: '2018-05-01'
-        }
-      ]
+            title:  '{{$prak->kegunaan.'\n'.$prak->tema}}',
+            start:  '{{$prak->tgl_pinjam}}',
+            color:  '#00695c '
+        },
+        @endforeach
+        @foreach($peminjaman as $peminjaman)
+        {
+            title:  '{{$peminjaman->nama.'\n'.$peminjaman->kegunaan}}',
+            start:  '{{$peminjaman->tgl_pinjam}}',
+            color:  '#01579b'
+        },
+        @endforeach
+      ],
     });
 
     // build the locale selector's options
@@ -62,4 +70,9 @@
   });
 
 </script>
+@endsection
+@section('navbar')
+<li class="active"><a href="{{url('/kegiatan')}}">Kegiatan</a></li>
+<li class=""><a href="{{url('/alat')}}">Daftar Alat Lab</a></li>
+<li class=""><a href="{{url('/langkah-peminjaman')}}">Langkah Peminjaman</a></li>
 @endsection

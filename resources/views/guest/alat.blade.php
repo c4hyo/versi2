@@ -49,7 +49,6 @@
                 }else{
                     return '<img src="'+data+'" style="width:200px" class="img-rounded img-responsive">';
                 }
-
             }},
     		{data:'nama',name:'nama'},
     		{data:'stok',name:'stok'},
@@ -58,4 +57,9 @@
     })
 });
 </script>
+@endsection
+@section('navbar')
+<li class=""><a href="{{url('/kegiatan')}}">Kegiatan</a></li>
+<li class="active"><a href="{{url('/alat')}}">Daftar Alat Lab</a></li>
+<li class=""><a href="{{url('/langkah-peminjaman')}}">Langkah Peminjaman</a></li>
 @endsection

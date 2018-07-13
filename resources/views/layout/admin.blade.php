@@ -12,6 +12,7 @@
   @yield('css')
   <link rel="stylesheet" href="{{url('dist/css/AdminLTE.min.css')}}">
   <link rel="stylesheet" href="{{url('dist/css/skins/_all-skins.min.css')}}">
+  <link rel="stylesheet" href="{{url('plugins/pace/pace.min.css')}}">
   <link rel="icon" type="image/png" href="{{ url('img/undip.png') }}" sizes="32x32">
   <link rel="stylesheet" href="{{url('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
@@ -22,7 +23,7 @@
    }
   </style>
 </head>
-<body class="hold-transition skin-red sidebar-collapse sidebar-mini" onload="startTime()">
+<body class="hold-transition skin-red-light sidebar-collapse sidebar-mini" onload="startTime()">
 <div class="wrapper">
 
   <header class="main-header">
@@ -137,6 +138,19 @@
 <script src="{{url('dist/js/adminlte.min.js')}}"></script>
 <script src="{{url('dist/js/pages/dashboard.js')}}"></script>
 <script src="{{url('dist/js/demo.js')}}"></script>
+<script src="{{url('bower_components/PACE/pace.min.js')}}"></script>
+<script type="text/javascript">
+  $(document).ajaxStart(function () {
+    Pace.restart()
+  })
+  $('.ajax').click(function () {
+    $.ajax({
+      url: '#', success: function (result) {
+        $('.ajax-content').html('<hr>Ajax Request Completed !')
+      }
+    })
+  })
+</script>
 @yield('js')
 </body>
 </html>

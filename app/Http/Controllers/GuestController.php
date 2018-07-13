@@ -33,9 +33,25 @@ class GuestController extends Controller
 
     	return view('guest/alat');
     }
+    public function prak($slug)
+    {
+        $yes        =   Praktikum::where('slug',$slug)->get();
+        $no         =   Praktikum::where('slug','<>',$slug)->get();
+        $data       =   [
+            'yes'   =>  $yes,
+            'no'    =>  $no
+        ];
+        return view('guest/praktikum',$data);
+    }
     public function kegiatan()
     {
-    	return view('guest/kegiatan');
+        $praktikum  =   Ruang::where('id_peminjam','Admin')->where('status','Sudah')->get();
+        $peminjaman =   viewruang::where('status','Sudah')->get();
+        $data       =   [
+            'praktikum'     =>  $praktikum,
+            'peminjaman'    =>  $peminjaman
+        ];
+    	return view('guest/kegiatan',$data);
     }
     public function berita($slug)
     {
@@ -55,5 +71,9 @@ class GuestController extends Controller
     {
         $alat = Alat::all();
         return Datatables::of($alat)->make(true);
+    }
+    public function pinjam()
+    {
+        return view('guest/langkah');
     }
 }

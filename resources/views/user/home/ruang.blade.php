@@ -7,15 +7,15 @@
                 <h4 class="modal-title">Cetak Surat Ruang <br><small>{{$ruangPinjam->kegunaan}}</small></h4>
             </div>
             <div class="modal-body">
-                <form action="" enctype="multipart/form-data" method="post">
+                <form action="{{url('/user/surat/ruang/'.$ruangPinjam->tgl_pinjam)}}" enctype="multipart/form-data" method="post">
                     <div><label for=""><h3>{{$ruangPinjam->nama}}</h3></label></div>
                     <div class="form-group">
                         <label class="label-control">Dosen Pembimbing 1</label>
-                        <input type="text" name="dosbing1" class="form-control" required title="Di isi ( - ) kalo tidak ada Dosen Pembimbing">
+                        <input type="text" name="dos1" class="form-control" required title="Di isi ( - ) kalo tidak ada Dosen Pembimbing">
                     </div>
                     <div class="form-group">
                         <label class="label-control">Dosen Pembimbing 2</label>
-                        <input type="text" name="dosbing2" class="form-control" required title="Di isi ( - ) kalo tidak ada Dosen Pembimbing">
+                        <input type="text" name="dos2" class="form-control" required title="Di isi ( - ) kalo tidak ada Dosen Pembimbing">
                     </div>
                      <div class="form-group">
                         <label class="label-control">Judul</label>

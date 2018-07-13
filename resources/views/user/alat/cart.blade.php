@@ -15,11 +15,11 @@
             @foreach($peminjam as $peminjam)
                 <div class="form-group">
                     <label for="" class="label-control">Nama Peminjam</label>
-                    <input type="text" name="nama" class="form-control" value="{{$nama}}" disabled>
+                    <input type="text" name="nama" class="form-control" value="{{$nama}}" readOnly>
                 </div>
                 <div class="form-group">
                     <label for="" class="label-control">NIM</label>
-                    <input type="text" name="nim" class="form-control" value="{{$nim}}" disabled>
+                    <input type="text" name="nim" class="form-control" value="{{$nim}}" readOnly>
                 </div>
                 <div class="form-group">
                     <label for="" class="label-control">Nomor Handphone</label>
@@ -34,6 +34,7 @@
                     <select name="kegunaan" class="form-control" required>
                         <option value="">--Pilih--</option>
                         <option value="Praktikum">Praktikum</option>
+                        <option value="Tugas Kuliah">Tugas Kuliah</option>
                         <option value="Penelitian">Penelitian</option>
                         <option value="Tugas Akhir">Tugas Akhir</option>
                     </select>
@@ -112,5 +113,14 @@
       <div class="alert alert-danger">
           <p align="center">{{ session('gagal') }}</p>
       </div>
+    @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 @endsection

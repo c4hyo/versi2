@@ -1,1 +1,1 @@
-<h1>Hallo</h1>
+<img src="{{url('img/undip.png')}}" alt="">

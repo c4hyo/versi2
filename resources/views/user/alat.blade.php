@@ -24,6 +24,15 @@
           <p align="center">{{ session('gagal') }}</p>
       </div>
     @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 </div>
 
 <div class="thumbnail table-responsive">
@@ -81,7 +90,7 @@
                     {{csrf_field()}}
                     <td>
                     <div class="form-group">
-                        <input type="number" name="Jumlah" id="" class="form-control" min="0" max="{{$alat->stok}}" required>
+                        <input type="number" name="Jumlah" id="" class="form-control" min="1" max="{{$alat->stok}}" required>
                     </div>
                     </td>
                     <td><button class="btn btn-info btn-sm" type="submit"><span class="fa fa-thumbs-o-up">&nbsp;</span>Pilih</button></td>

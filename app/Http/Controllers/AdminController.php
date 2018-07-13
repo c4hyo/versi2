@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use File;
 use Yajra\DataTables\Datatables;
 use App\Admin;
 use App\Alat;
@@ -63,6 +65,8 @@ class AdminController extends Controller
     }
     public function index()
     {
+        $praktikum  =   Ruang::where('id_peminjam','Admin')->where('status','Sudah')->get();
+        $peminjaman =   viewruang::get();
         $online     = Peminjam::where('status','Online')->get();
         $session = array(
             'nama'      => session('nama'),
@@ -70,7 +74,9 @@ class AdminController extends Controller
             'meja'      => count(Meja::where('status','belum')->get()),
             'alat'      => count(Alat::where('stok','<>','0')->get()),
             'posting'   => count(Posting::where('status','<>','Batal')->get()),
-            'online'    => $online
+            'online'    => $online,
+            'praktikum'     =>  $praktikum,
+            'peminjaman'    =>  $peminjaman
         );
         return view('admin/home',$session);
     }
@@ -205,11 +211,24 @@ class AdminController extends Controller
     }
     public function editPrak($id,Request $request)
     {
+        $kondisi    =   Ruang::where('tgl_pinjam',$request['tgl'])->where('id_peminjam','<>','Admin')->get();
+        if(count($kondisi)== 0){
        $edit    = Ruang::where('id',$id)->update([
             'keterangan'    =>  $request['judul'],
             'tgl_pinjam'    =>  $request['tgl'],
        ]);
         return redirect()->back()->with('sukses','Berhasil diubah');
+       }else{
+           $edit    = Ruang::where('id',$id)->update([
+            'keterangan'    =>  $request['judul'],
+            'tgl_pinjam'    =>  $request['tgl'],
+       ]);
+       Ruang::where('tgl_pinjam',$request['tgl'])->where('id_peminjam','<>','Admin')->update([
+           'status'    =>  'Batal'
+           ]);
+           return redirect()->back()->with('sukses','Berhasil diubah');
+
+       }
     }
     public function prakAktif($judul)
     {
@@ -329,8 +348,21 @@ class AdminController extends Controller
             'tgl_pinjam'    =>  $tgl,
             'status'        =>  "Belum"
         );
+        $peminjam       =   Peminjam::where('username',$nim)->get();
+        foreach($peminjam as $peminjam){
+            File::delete($peminjam->ktm);
+            $ktm    =   str_replace(url('').'/','',$peminjam->ktm);
+            $foto   =   str_replace(url('').'/','',$peminjam->foto);
+            unlink($ktm);
+            unlink($foto);
+
+        }
         Ruang::where($kondisi)->update([
             'status'        =>  "Sudah"
+        ]);
+        Peminjam::where('username',$nim)->update([
+            'ktm'       =>  null,
+            'foto'      =>  null
         ]);
         return redirect()->back()->with('sukses','Peminjaman ruang disetujui');
     }
@@ -346,8 +378,21 @@ class AdminController extends Controller
             'tgl_pinjam'    =>  $tgl,
             'status'        =>  "Belum"
         );
+        $peminjam       =   Peminjam::where('username',$nim)->get();
+        foreach($peminjam as $peminjam){
+            File::delete($peminjam->ktm);
+            $ktm    =   str_replace(url('').'/','',$peminjam->ktm);
+            $foto   =   str_replace(url('').'/','',$peminjam->foto);
+            unlink($ktm);
+            unlink($foto);
+
+        }
         Ruang::where($kondisi)->update([
             'status'        =>  "Batal"
+        ]);
+        Peminjam::where('username',$nim)->update([
+            'ktm'       =>  null,
+            'foto'      =>  null
         ]);
         return redirect()->back()->with('gagal','Peminjaman ruang dibatalkan');
     }
@@ -413,9 +458,8 @@ class AdminController extends Controller
                 'satuan'    =>  $request['satuan'],
                 'merk'      =>  $request['merk'],
                 'keterangan'=>  $request['ket'],
-                'gambar'    =>  ""
+                'gambar'    =>  null
             ]);
-            $gambar->move('img/alat',$gambar->getClientOriginalName());
             return redirect()->back()->with('sukses','Alat berhasil ditambahkan');
         }
     }
@@ -445,9 +489,7 @@ class AdminController extends Controller
                 'satuan'    =>  $request['satuan'],
                 'merk'      =>  $request['merk'],
                 'keterangan'=>  $request['ket'],
-                'gambar'    =>  ""
             ]);
-            $gambar->move('img/alat',$gambar->getClientOriginalName());
             return redirect()->back()->with('sukses','Data alat berhasil diubah');
         }
     }
@@ -487,6 +529,11 @@ class AdminController extends Controller
         delete();
         return redirect()->back()->with('gagal','Berhasil di hapus');
     }
+    public function delPosting()
+    {
+       Posting::where('status','Batal')->delete();
+       return redirect()->back()->with('gagal','Berhasil di hapus');
+    }
     public function resetPass($id)
     {
        Peminjam::where('username',$id)->update([
@@ -523,6 +570,11 @@ class AdminController extends Controller
         $alat   =   viewalat::where('status','Batal')->get();
         return Datatables::of($alat)->make(true);
     }
+    public function delPost()
+    {
+       $posting     =   posting::where('status','Batal')->get();
+       return Datatables::of($posting)->make(true);
+    }
     public function addUser(Request $request)
     {
         $request->validate([
@@ -542,5 +594,37 @@ class AdminController extends Controller
                 return redirect()->back()->with('sukses','Berhasil menambahkan pengguna');
             }
         }
+    }
+    public function unduhAlat(Request $request)
+    {
+        $awal       =   $request['awal'];
+        $akhir      =   $request['akhir'];
+        $request->validate([
+                'akhir' 		=>'required|after:awal',
+        ]);
+        $alat   =   viewalat::whereBetween('tgl_pinjam',[$request['awal'],$request['akhir']])->orderBy('tgl_pinjam','asc')->get();
+        $data   =   [
+            'awal'      =>  $request['awal'],
+            'akhir'     =>  $request['akhir'],
+            'alat'      =>  $alat
+        ];
+        $pdf = PDF::loadView('admin/home/alat',$data)->setPaper('a4', 'potrait');
+        return $pdf->download("Data Peminjaman Alat ($awal s/d $akhir).pdf");
+    }
+    public function unduhRuang(Request $request)
+    {
+        $awal       =   $request['awal'];
+        $akhir      =   $request['akhir'];
+        $request->validate([
+                'akhir' 		=>'required|after:awal',
+        ]);
+        $ruang  =   viewruang::whereBetween('tgl_pinjam',[$request['awal'],$request['akhir']])->orderBy('tgl_pinjam','asc')->get();
+         $data   =   [
+            'awal'      =>  $request['awal'],
+            'akhir'     =>  $request['akhir'],
+            'ruang'      =>  $ruang
+        ];
+        $pdf = PDF::loadView('admin/home/ruang',$data)->setPaper('a4', 'potrait');
+        return $pdf->download("Data Peminjaman Ruang ($awal s/d $akhir).pdf");
     }
 }

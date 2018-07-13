@@ -25,14 +25,12 @@
         <ul class="nav nav-tabs">
             <li class="active"><a href="#mhs" data-toggle="tab">Pengguna</a></li>
             <li><a href="#btl" data-toggle="tab">Pembatalan peminjaman</a></li>
-            <li><a href="#lain" data-toggle="tab">Lain-lain</a></li>
             <li><a href="#admin" data-toggle="tab">Admin</a></li>
         </ul>
     </div>
     <div class="tab-content">
         @include('admin.pengaturan.mahasiswa')
         @include('admin.pengaturan.batal')
-        @include('admin.pengaturan.lain')
         @include('admin.pengaturan.admin')
     </div>
 @endsection
@@ -84,6 +82,19 @@
     		{data:'username',name:'username'},
             {data:'nama_alat',name:'nama_alat'},
             {data:'tgl_pinjam',name:'tgl_pinjam'}
+    	]
+    })
+});
+</script>
+<script>
+  $(function () {
+    $('#posting').DataTable({
+    	processing 	: 	true,
+    	serverSide	: 	true,
+    	ajax		: 	"{{route('posting')}}",
+    	columns		: 	[
+    		{data:'judul',name:'judul'},
+    		{data:'waktu',name:'waktu'}
     	]
     })
 });

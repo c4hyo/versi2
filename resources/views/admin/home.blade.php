@@ -81,7 +81,57 @@ switch (date("l")) {
           </div>
         </div>
     </div>
-    <div style="margin-top:15px;margin-bottom:20px;"></div>
+    <!-- <div style="margin-top:15px;margin-bottom:20px;"></div> -->
+    <div class="row">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+        <h3>Unduh Data Peminjam</h3>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <h4>Peminjam Alat</h4>
+            <div>
+                <form action="{{url('/bukanwp-admin/unduh/alat')}}" method="post">
+                    <div class="form-group">
+                        <label for="">Tanggal Awal</label>
+                        <input type="date" name="awal" id="" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tanggal Akhir</label>
+                        <input type="date" name="akhir" id="" required class="form-control">
+                    </div>
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <input type="submit" value="Cetak" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <h4>Peminjam Ruang</h4>
+            <div>
+                <form action="{{url('/bukanwp-admin/unduh/ruang')}}" method="post">
+                    <div class="form-group">
+                        <label for="">Tanggal Awal</label>
+                        <input type="date" name="awal" id="" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tanggal Akhir</label>
+                        <input type="date" name="akhir" id="" required class="form-control">
+                    </div>
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <input type="submit" value="Cetak" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-8 col-md-8 col-xs-12">
             <div class="thumbnail" id="calendar"></div>
@@ -92,16 +142,41 @@ switch (date("l")) {
                     <thead>
                         <tr>
                             <th>Pengguna</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                     <tfoot>
                         <tr>
                             <th>Pengguna</th>
+                            <th>Status</th>
                         </tr>
                     </tfoot>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-xs-12">
+            <h2>Keterangan : </h2>
+            <table>
+                <tr>
+                    <td style="width:50%"><div style="background-color:#00695c"><h3 style="color:#00695c">__________</h3></div></td>
+                    <td style="width:50%"><h4>&nbsp;Digunakan praktikum</h4></td>
+                </tr>
+                <tr>
+                    <td style="width:50%"><div style="background-color:#01579b"><h3 style="color:#01579b">__________</h3></div></td>
+                    <td style="width:50%"><h4>&nbsp;Sudah disetujui</h4></td>
+                </tr>
+                <tr>
+                    <td style="width:50%"><div style="background-color:#ff9100"><h3 style="color:#ff9100">__________</h3></div></td>
+                    <td style="width:50%"><h4>&nbsp;Belum disetujui</h4></td>
+                </tr>
+                <tr>
+                    <td style="width:50%"><div style="background-color:#b71c1c"><h3 style="color:#b71c1c">__________</h3></div></td>
+                    <td style="width:50%"><h4>&nbsp;Peminjaman dibatalkan</h4></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
@@ -129,15 +204,29 @@ switch (date("l")) {
       locale: initialLocaleCode,
       buttonIcons: false, // show the prev/next text
       weekNumbers: true,
-      navLinks: true, // can click day/week names to navigate views
-      editable: false,
-      eventLimit: true, // allow "more" link when too many events
+      navLinks: true,
       events: [
+        @foreach($praktikum as $prak)
         {
-          title: 'All Day Event',
-          start: '2018-05-01'
-        }
-      ]
+            title:  '{{$prak->kegunaan.'\n'.$prak->tema}}',
+            start:  '{{$prak->tgl_pinjam}}',
+            color:  '#00695c '
+        },
+        @endforeach
+        @foreach($peminjaman as $peminjaman)
+        {
+            title:  '{{$peminjaman->nama.'\n'.$peminjaman->kegunaan}}',
+            start:  '{{$peminjaman->tgl_pinjam}}',
+            @if($peminjaman->status == "Sudah")
+            color:  '#01579b'
+            @elseif($peminjaman->status == "Belum")
+            color:  '#ff9100'
+            @elseif($peminjaman->status == "Batal")
+            color:  '#b71c1c'
+            @endif
+        },
+        @endforeach
+      ],
     });
 
     // build the locale selector's options
@@ -171,6 +260,7 @@ function startTime() {
 function checkTime(i) {
     if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
+
 }
 </script>
 <script src="{{url('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
@@ -188,7 +278,11 @@ function checkTime(i) {
     	serverSide	: 	true,
     	ajax		: 	"{{route('Online')}}",
     	columns		: 	[
-    		{data:'nama',name:'nama'}
+    		{data:'nama',name:'nama'},
+            {data:'status',"render":function(data,type,row,meta){
+                return '<i class="fa fa-circle text-success"></i>&nbsp;'+data;
+            }},
+
     	]
     })
 });

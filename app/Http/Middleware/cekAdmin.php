@@ -18,7 +18,8 @@ class cekAdmin
         if($request->session()->exists('user')&&$request->session()->exists('nama')){
              return $next($request);
         }else{
-             return back()->with('gagal','Anda belum login');
+            //  return back()->with('gagal','Anda belum login');
+            return abort('404');
             //  dd($request->session()->exist('user'));
         }
     }

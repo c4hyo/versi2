@@ -4,7 +4,7 @@
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Apakah alat tersebut akan dihapus </h4>
+                <h4 class="modal-title">Apakah alat tersebut akan diubah </h4>
             </div>
             <div class="modal-body">
                <form action="{{url('/bukanwp-admin/pengelolaan/alat/edit/'.$alat->id)}}" enctype="multipart/form-data" method="post">

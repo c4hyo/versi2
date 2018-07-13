@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{url('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{url('bower_components/font-awesome/css/font-awesome.min.css')}}">
   <link rel="stylesheet" href="{{url('bower_components/Ionicons/css/ionicons.min.css')}}">
+  <link rel="stylesheet" href="{{url('plugins/pace/pace.min.css')}}">
   @yield('css')
   <link rel="stylesheet" href="{{url('dist/css/AdminLTE.min.css')}}">
   <link rel="stylesheet" href="{{url('dist/css/skins/_all-skins.min.css')}}">
@@ -128,5 +129,18 @@
 <script src="{{url('dist/js/adminlte.min.js')}}"></script>
 <script src="{{url('dist/js/pages/dashboard.js')}}"></script>
 <script src="{{url('dist/js/demo.js')}}"></script>
+<script src="{{url('bower_components/PACE/pace.min.js')}}"></script>
+<script type="text/javascript">
+  $(document).ajaxStart(function () {
+    Pace.restart()
+  })
+  $('.ajax').click(function () {
+    $.ajax({
+      url: '#', success: function (result) {
+        $('.ajax-content').html('<hr>Ajax Request Completed !')
+      }
+    })
+  })
+</script>
 </body>
 </html>

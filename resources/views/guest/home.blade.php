@@ -8,47 +8,49 @@
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
       <li data-target="#myCarousel" data-slide-to="3"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
+      <li data-target="#myCarousel" data-slide-to="4"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-
       <div class="item active">
-        <img src="{{url('img/la.jpg')}}" alt="Los Angeles" style="width:100%;">
+        <center><img src="{{url('img/praktikum/nx-4i_02.jpg')}}" alt="sisdig" class="img-thumbnail"  style="width:500px;height:400px"></center>
         <div class="carousel-caption">
-          <h3>Los Angeles</h3>
-          <p>LA is always so much fun!</p>
+          <h3 style="color:#0e0e0e;background-color:#f0f0f0">Praktikum</h3>
+          <h4 style="color:#0e0e0e;background-color:#f0f0f0">Sistem Digital</h4>
         </div>
       </div>
 
       <div class="item">
-        <img src="{{url('img/chicago.jpg')}}" alt="Chicago" style="width:100%;">
+        <center><img src="{{url('img/praktikum/tip.jpg')}}" alt="TIP" class="img-thumbnail"  style="width:500px;height:400px"></center>
         <div class="carousel-caption">
-          <h3>Chicago</h3>
-          <p>Thank you, Chicago!</p>
+          <h3 style="color:#0e0e0e;background-color:#f0f0f0">Praktikum</h3>
+          <h4 style="color:#0e0e0e;background-color:#f0f0f0">Teknik Interface dan Peripheral</h4>
         </div>
       </div>
 
       <div class="item">
-        <img src="{{url('img/ny.jpg')}}" alt="New York" style="width:100%;">
+        <center><img src="{{url('img/praktikum/1331-2755.jpg')}}" alt="TM" class="img-thumbnail"  style="width:500px;height:400px"></center>
         <div class="carousel-caption">
-          <h3><a href="">New York</a></h3>
-          <p>We love the Big Apple!</p>
+          <h3 style="color:#0e0e0e;background-color:#f0f0f0">Praktikum</h3>
+          <h4 style="color:#0e0e0e;background-color:#f0f0f0">Teknik Mikroprosesor</h4>
         </div>
       </div>
-
       <div class="item">
-        <img src="{{url('img/ny.jpg')}}" alt="New York" style="width:100%;">
+        <center><img src="{{url('img/praktikum/515b4656ce395f8a38000000.png')}}" alt="Robotik" class="img-thumbnail" style="width:500px;height:400px"></center>
         <div class="carousel-caption">
-          <h3>New York</h3>
-          <p>We love the Big Apple!</p>
+          <h3 style="color:#0e0e0e;background-color:#f0f0f0">Praktikum</h3>
+          <h4 style="color:#0e0e0e;background-color:#f0f0f0">Robotika</h4>
         </div>
       </div>
-
+        <div class="item">
+        <center><img src="{{url('img/praktikum/Spartan-3E.jpg')}}" alt="SDL" class="img-thumbnail"  style="width:500px;height:400px"></center>
+        <div class="carousel-caption">
+          <h3 style="color:#0e0e0e;background-color:#f0f0f0">Praktikum</h3>
+          <h4 style="color:#0e0e0e;background-color:#f0f0f0">Sistem Digital Lanjut</h4>
+        </div>
+      </div>
     </div>
-
-    <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
       <span class="sr-only">Previous</span>
@@ -66,15 +68,15 @@
         <img src="{{$prak->gambar}}" alt="New York" style="width:300px;height:150px" class="img-circle img-thumbnail">
     </div>
     <div class="thumbnail">
-        <label><p>{{$prak->nama}}</p></label>
+        <label><p><a href="{{url('/praktikum/'.$prak->slug)}}">{{$prak->nama}}</a></p></label>
         <p>{!!$prak->keterangan!!}</p>
     </div>
     <div class="thumbnail">
-    @if($prak->status == "Sudah")
-        <p><a href="{{url('/kegiatan')}}">Lihat Jadwal</a></p>
-    @else
-        <p><u>Praktikum Belum dimulai</u></p>
-    @endif
+        @if($prak->status == "Sudah")
+            <p><a href="{{url('/kegiatan')}}">Lihat Jadwal</a></p>
+        @else
+            <p><u>Praktikum Belum dimulai</u></p>
+        @endif
     </div>
   </div>
     @endforeach
@@ -105,5 +107,10 @@
         @endif
     </ul>
 </div>
+@endsection
+@section('navbar')
+<li class=""><a href="{{url('/kegiatan')}}">Kegiatan</a></li>
+<li class=""><a href="{{url('/alat')}}">Daftar Alat Lab</a></li>
+<li class=""><a href="{{url('/langkah-peminjaman')}}">Langkah Peminjaman</a></li>
 @endsection
 

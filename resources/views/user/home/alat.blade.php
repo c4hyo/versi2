@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Cetak Surat Alat <br><small>{{$alatPinjam->kegunaan}}</small></h4>
             </div>
             <div class="modal-body">
-                <form action="" enctype="multipart/form-data" method="post">
+                <form action="{{url('/user/surat/alat/'.$alatPinjam->tgl_pinjam.'/'.$alatPinjam->tgl_kembali)}}" method="post">
                     <div><label for=""><h3>{{$alatPinjam->nama}}</h3></label></div>
                     <div class="form-group">
                         <label class="label-control">Dosen Pembimbing 1</label>

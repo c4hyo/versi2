@@ -4,27 +4,27 @@
 @endsection
 @section('konten')
 <div class="row">
-@foreach($postView as $posting)
-<title>{{$posting->judul}}</title>
+@foreach($yes as $posting)
+<title>{{$posting->nama}}</title>
     <div class="col-xd-12 col-sm-8 col-md-8 col-lg-8">
         <h1>
-            {{$posting->judul}}
+            {{$posting->nama}}
         </h1>
-        <small>{{$posting->waktu}}</small>
         <div class="thumbnail">
+            <img src="{{$posting->gambar}}" class="img-thumbnail" style="width:500px;height:400px">
         <p>
-            {!!$posting->posting!!}
+            {!!$posting->keterangan!!}
         </p>
         </div>
     </div>
 @endforeach
 
     <div class="col-sm-4 col-xd-12 col-md-4 col-lg-4">
-    <h3>Posting yang lain</h3>
+    <h3>Praktikum yang lain</h3>
      <div class="box-body">
         <ul class="products-list product-list-in-box">
-            @foreach($postNot as $post)
-            <li class="item"><a href="{{url('/posting/'.$post->slug)}}">&nbsp;&nbsp;&nbsp;&nbsp;{{$post->judul}}</a><br><small>{{$posting->waktu}}</small></li>
+            @foreach($no as $post)
+            <li class="item"><a href="{{url('/praktikum/'.$post->slug)}}">&nbsp;&nbsp;{{$post->nama}}</a></li>
             @endforeach
         </ul>
     </div>

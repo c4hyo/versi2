@@ -19,7 +19,7 @@ class cekUser
            return $next($request);
         }else{
             // return redirect ('bukanwp-admin')->with('gagal','Anda belum login');
-             return back()->with('gagal','Anda belum login');
+             return abort('404');
             // dd($request->session()->exist('nama'));
         }
 

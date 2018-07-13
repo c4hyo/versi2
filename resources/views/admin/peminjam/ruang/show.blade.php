@@ -9,6 +9,7 @@
             <div class="modal-body">
                 <p>Kegunaan : {{$ruang->kegunaan}}</p>
                 <p>Tanggal Pinjam : {{$ruang->tgl_pinjam}}</p>
+                <p>Keterangan : {{$ruang->keterangan}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
